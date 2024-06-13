@@ -3,17 +3,14 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 8888;
 const hostname = process.env.HOST_NAME;
+const configViewEngine = require('./config/viewEngine');
+const webRoutes = require('./routes/web');
 
 //config template engine
-app.set('views', './src/views/');
-app.set('view engine', 'ejs');
+// config static file
+configViewEngine(app);
+app.use('/', webRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-app.get('/test', (req, res) => {
-  res.render('sample.ejs');
-})
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
 })
